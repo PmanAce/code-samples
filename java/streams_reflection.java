@@ -21,6 +21,10 @@
     return filters;
   }
 
+  protected static Callable<Void> execute(Runnable action) {
+    return () -> { action.run(); return null; };
+  }
+
   private static <K> Map<K, Long> buildFilter(List<Product> products, Function<Product,? extends K> classifier) {
     return products.parallelStream()        
         .collect(Collectors.groupingBy(classifier, Collectors.counting()));
